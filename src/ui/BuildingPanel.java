@@ -10,14 +10,15 @@ public class BuildingPanel extends JPanel {
         JLabel north = new JLabel("Hotel");
         this.add(north,BorderLayout.NORTH);
 
-        JPanel elevatorView = new ElevatorViewPanel();
-        this.add(elevatorView,BorderLayout.WEST);
-
         JPanel floors = new JPanel();
         floors.setLayout(new BoxLayout(floors, BoxLayout.PAGE_AXIS));
         for(int i = nbEtage-1; i>=0; i--)
             floors.add(new FloorPanel(i,nbEtage));
         this.add(floors,BorderLayout.CENTER);
+
+        JPanel elevatorView = new ElevatorViewPanel(floors.getComponent(0).getMaximumSize());
+        this.add(elevatorView,BorderLayout.WEST);
+
 
         this.setBackground(new Color(221, 147, 218));
     }
