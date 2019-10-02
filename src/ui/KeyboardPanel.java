@@ -36,9 +36,7 @@ public class KeyboardPanel extends JPanel{
 
         JButton emergencyStop = new JButton("Stop");
         emergencyStop.setSize(12, 12);
-
         this.add(emergencyStop);
-
         JButton emergencyKill = new JButton("X");
 
         this.add(emergencyKill);

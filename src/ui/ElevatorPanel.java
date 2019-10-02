@@ -15,8 +15,10 @@ public class ElevatorPanel extends JPanel
 
         KeyboardPanel keyboardPanel = new KeyboardPanel(nbEtage);
         JPanel logPanel = new JPanel();
-        this.add(keyboardPanel);
+
         this.add(logPanel);
+
+        this.add(keyboardPanel);
 
     }
 }
