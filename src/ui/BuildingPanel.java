@@ -6,6 +6,19 @@ import java.awt.*;
 public class BuildingPanel extends JPanel {
     public BuildingPanel(int nbEtage) {
         super(new BorderLayout());
-        this.setBackground(new Color(155,155,155));
+
+        JLabel north = new JLabel("Hotel");
+        this.add(north,BorderLayout.NORTH);
+
+        JPanel elevatorView = new ElevatorViewPanel();
+        this.add(elevatorView,BorderLayout.WEST);
+
+        JPanel floors = new JPanel();
+        floors.setLayout(new BoxLayout(floors, BoxLayout.PAGE_AXIS));
+        for(int i = nbEtage-1; i>=0; i--)
+            floors.add(new FloorPanel(i,nbEtage));
+        this.add(floors,BorderLayout.CENTER);
+
+        this.setBackground(new Color(221, 147, 218));
     }
 }
