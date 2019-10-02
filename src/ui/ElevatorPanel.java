@@ -10,15 +10,13 @@ public class ElevatorPanel extends JPanel
         super(new BorderLayout());
         this.setBackground(new Color(105,5,254));
         BoxLayout boxLayout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
-
-        // Ajouter votre panel ici
+        this.setLayout(boxLayout);
 
         KeyboardPanel keyboardPanel = new KeyboardPanel(nbEtage);
-        JPanel logPanel = new JPanel();
-
-        this.add(logPanel);
+        LogPanel logPanel = new LogPanel();
 
         this.add(keyboardPanel);
+        this.add(logPanel);
 
     }
 }
