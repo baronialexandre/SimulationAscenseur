@@ -1,18 +1,29 @@
 package ui;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 
 public class ElevatorViewPanel extends JPanel {
-    public ElevatorViewPanel(Dimension size) {
+    public ElevatorViewPanel(int nbEtage) {
         super(new BorderLayout());
-        JScrollBar ascenseur = new JScrollBar();
-        ascenseur.setSize(200,200);
-        ascenseur.setBackground(new Color(102,102,102));
+        JSlider ascenseur = new JSlider();
+        ascenseur.setOrientation(SwingConstants.VERTICAL);
+        ascenseur.setMinimum(0);
+        ascenseur.setMaximum(nbEtage*100);
+        ascenseur.setValue(50);
+        ascenseur.setMinorTickSpacing(50);
+        ascenseur.setMajorTickSpacing(100);
+        ascenseur.setPaintTicks(true);
+        ascenseur.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                System.out.println(ascenseur.getValue());
+            }
+        });
 
-        //ascenseur.setLocation(0,0);
         this.add(ascenseur);
-        this.setSize(100,720);
-        this.setBackground(new Color(159,190, 91));
+        //this.setSize(100,720);
     }
 }

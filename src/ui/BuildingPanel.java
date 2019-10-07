@@ -16,7 +16,7 @@ public class BuildingPanel extends JPanel {
             floors.add(new FloorPanel(i,nbEtage));
         this.add(floors,BorderLayout.CENTER);
 
-        JPanel elevatorView = new ElevatorViewPanel(floors.getComponent(0).getMaximumSize());
+        JPanel elevatorView = new ElevatorViewPanel(nbEtage);
         this.add(elevatorView,BorderLayout.WEST);
 
 
