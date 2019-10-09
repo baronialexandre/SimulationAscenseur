@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ControlCommand {
+public class ControlCommand
+{
     private static final double time = 1000;
     private List<Integer> callsUp, callsDown;
     private ControllerState state;
@@ -24,7 +25,7 @@ public class ControlCommand {
         this.direction = Direction.NONE;
         this.currentFloor = 0;
         this.emergency = false;
-        this.elevatorSimulator = elevatorSimulator(floorNumber);
+        this.elevatorSimulator = new ElevatorSimulator(floorNumber, 0);
     }
 
     public void addCallUp(int floorNb){

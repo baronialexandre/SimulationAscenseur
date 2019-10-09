@@ -1,10 +1,16 @@
 package ui;
 
+import control.ControlCommand;
+import ui.listeners.EmergencyActionListener;
+import ui.listeners.FloorCallListener;
+import ui.listeners.RestartActionListener;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class KeyboardPanel extends JPanel
 {
+    public ControlCommand controlCommand;
 
     public KeyboardPanel(int nbEtage)
     {
@@ -28,16 +34,20 @@ public class KeyboardPanel extends JPanel
         {
             buttonArray[i] = "" + i;
             tab_button[i] = new JButton(buttonArray[i]);
+            tab_button[i].addActionListener(new FloorCallListener(i));
             floor.add(tab_button[i]);
         }
         this.add(floor);
 
 
-        JButton emergencyStop = new JButton("Stop");
-        emergencyStop.setSize(12, 12);
-        this.add(emergencyStop);
-        JButton emergencyKill = new JButton("X");
+        JButton emergencyButton = new JButton("Arrêt d'Urgence");
+        emergencyButton.setSize(12, 12);
+        emergencyButton.addActionListener(new EmergencyActionListener());
+        this.add(emergencyButton);
 
-        this.add(emergencyKill);
+        JButton restartButton = new JButton("Redémarrer");
+        restartButton.addActionListener(new RestartActionListener());
+
+        this.add(restartButton);
     }
 }

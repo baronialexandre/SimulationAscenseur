@@ -1,15 +1,24 @@
 package ui;
 
+import control.ControlCommand;
+import ui.listeners.EmergencyActionListener;
+import ui.listeners.FloorCallListener;
+import ui.listeners.RestartActionListener;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class MainWindow extends JFrame
 {
     public MainWindow(int nbEtage)
     {
         super("Simulateur Ascenseur");
+
+        ControlCommand controlCommand = new ControlCommand(nbEtage);
+        FloorCallListener.setControlCommand(controlCommand);
+        EmergencyActionListener.setControlCommand(controlCommand);
+        RestartActionListener.setControlCommand(controlCommand);
+
         JPanel mainPane = new JPanel(new GridLayout(1,2));
 
         JPanel leftPane = new BuildingPanel(nbEtage);
@@ -22,10 +31,13 @@ public class MainWindow extends JFrame
         this.setContentPane(mainPane);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
+
+
     }
 
     public static void main(String[] args)
     {
+        // Fenêtre pour le choix du nombre d'étages
         SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(5, 2, 20, 1);
         JSpinner floorSpinner = new JSpinner(spinnerNumberModel);
         floorSpinner.setSize(50,50);
