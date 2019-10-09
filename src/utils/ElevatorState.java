@@ -1,6 +1,6 @@
 package utils;
 
-public enum ElevetorState {
+public enum ElevatorState {
     GOINGUP,
     GOINGDOWN,
     STOPPED;
