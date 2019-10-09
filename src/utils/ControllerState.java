@@ -1,6 +1,6 @@
 package utils;
 
-public enum ControlerState {
+public enum ControllerState {
     WAIT,
     MOVEMENT;
 }

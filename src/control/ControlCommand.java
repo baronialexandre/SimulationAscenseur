@@ -1,7 +1,7 @@
 package control;
 
 import utils.Direction;
-import utils.ControlerState;
+import utils.ControllerState;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,7 +10,7 @@ import java.util.List;
 public class ControlCommand {
     private static final double time = 1000;
     private List<Integer> callsUp, callsDown;
-    private ControlerState state;
+    private ControllerState state;
     private Direction direction;
     private int currentFloor;
     private int aimedFloor;
@@ -20,7 +20,7 @@ public class ControlCommand {
     public ControlCommand(int floorNumber) {
         this.callsUp = new ArrayList<>();
         this.callsDown = new ArrayList<>();
-        this.state = ControlerState.WAIT;
+        this.state = ControllerState.WAIT;
         this.direction = Direction.NONE;
         this.currentFloor = 0;
         this.emergency = false;
@@ -44,7 +44,7 @@ public class ControlCommand {
             addCallDown(aimedFloorNb);
     }
 
-    public ControlerState getState() {
+    public ControllerState getState() {
         return state;
     }
 

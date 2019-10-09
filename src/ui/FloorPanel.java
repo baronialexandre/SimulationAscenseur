@@ -3,8 +3,10 @@ package ui;
 import javax.swing.*;
 import java.awt.*;
 
-public class FloorPanel extends JPanel {
-    public FloorPanel(int floorId, int nbEtage) {
+public class FloorPanel extends JPanel
+{
+    public FloorPanel(int floorId, int nbEtage)
+    {
         super();
         this.add(new JLabel(String.valueOf(floorId)));
         if(!(floorId == nbEtage-1))
