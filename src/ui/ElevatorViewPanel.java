@@ -14,7 +14,7 @@ public class ElevatorViewPanel extends JPanel {
         ascenseur.setMaximum(nbEtage*100);
         ascenseur.setValue(50);
         ascenseur.setMinorTickSpacing(50);
-        ascenseur.setMajorTickSpacing(100);
+        //ascenseur.setMajorTickSpacing(100);
         ascenseur.setPaintTicks(true);
         ascenseur.addChangeListener(new ChangeListener() {
             @Override
