@@ -2,6 +2,8 @@ package utils;
 
 public enum ElevatorState {
     GOINGUP,
+    GOINGNEXTUP,
     GOINGDOWN,
-    STOPPED;
+    GOINGNEXTDOWN,
+    STOPPED
 }

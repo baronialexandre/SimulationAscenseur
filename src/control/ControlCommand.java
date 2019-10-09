@@ -25,7 +25,9 @@ public class ControlCommand
         this.direction = Direction.NONE;
         this.currentFloor = 0;
         this.emergency = false;
-        this.elevatorSimulator = new ElevatorSimulator(floorNumber, 0);
+        this.elevatorSimulator = new ElevatorSimulator(floorNumber);
+
+        new ElevatorListener(elevatorSimulator, this);
     }
 
     public void addCallUp(int floorNb){
@@ -35,7 +37,8 @@ public class ControlCommand
 
     public void addCallDown(int floorNb){
         callsDown.add(floorNb);
-        Collections.sort(callsDown,Collections.reverseOrder());
+        //Collections.sort(callsDown,Collections.reverseOrder());
+        callsDown.sort(Collections.reverseOrder()); // Conseillé
     }
 
     public void addCall(int aimedFloorNb){
@@ -57,16 +60,44 @@ public class ControlCommand
         return emergency;
     }
 
+    // quand on set le currentFloor il faut renseigner à elevatorSimulator ce qu'il doit faire par son état
+    void setCurrentFloor(int currentFloor) {
+        this.currentFloor = currentFloor;
+        if(currentFloor - aimedFloor == 0) {
+            //aimedFloorReached
+            elevatorSimulator.stopUntilOrder();
+        }
+        if(currentFloor - aimedFloor == 1) {
+            elevatorSimulator.setGoingNextDown();
+        }
+        else if(currentFloor - aimedFloor == -1) {
+            elevatorSimulator.setGoingNextUp();
+        }
+        else if(currentFloor - aimedFloor > 1) {
+            elevatorSimulator.setGoingDown();
+        }
+        else if(currentFloor - aimedFloor < -1) {
+            elevatorSimulator.setGoingUp();
+        }
+    }
+
+    public int getCurrentFloor() {
+        return currentFloor;
+    }
+
+    public int getAimedFloor() {
+        return aimedFloor;
+    }
+
     public void emergency(){
         emergency = true;
         callsUp.clear();
         callsDown.clear();
+        elevatorSimulator.stopUntilOrder();
     }
 
     public void restart(){
         emergency = false;
     }
-
-
 
 }

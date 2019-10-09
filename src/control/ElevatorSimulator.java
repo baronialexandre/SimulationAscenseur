@@ -2,8 +2,7 @@ package control;
 
 import utils.ElevatorState;
 
-import static utils.ElevatorState.GOINGDOWN;
-import static utils.ElevatorState.STOPPED;
+import static utils.ElevatorState.*;
 
 public class ElevatorSimulator extends Thread {
 
@@ -13,75 +12,76 @@ public class ElevatorSimulator extends Thread {
 
     private int floorNumber;
 
-    public ElevatorSimulator(int floorNumber) {
+    ElevatorSimulator(int floorNumber) {
         this.floorNumber = floorNumber;
     }
 
-    public int getY() {
+    int getY() {
         return y;
     }
 
-    public void goUp() {
+    private void goUp() {
         y++;
     }
 
-    public void goDown() {
+    private void goDown() {
         y--;
     }
 
-    public void stopUntilOrder() {
-        this.state = STOPPED;
-    }
+    void stopUntilOrder() {state = STOPPED; }
 
-    public void stopAtNextFloor() {
-        try {
-            if (this.state == GOINGDOWN) {
-                goDown();
-
-                Thread.sleep(10);
-            } else {
-                goDown();
-                Thread.sleep(10);
-            }
-
-            while (this.y % 100 != 0) {
-
-                if (this.state == GOINGDOWN) {
-                    goDown();
-
-                    Thread.sleep(10);
-                } else {
-                    goDown();
-                    Thread.sleep(10);
+    public void run() {
+        // doit tourner à l'infini
+        for(;;) {
+            try {
+                nextStep();
+                while (state == STOPPED) {
+                    sleep(10);
                 }
-
-
-            }
-        } catch (Exception e) {
-            System.out.println("Error in elevator motor brake");
-        }
-        stopUntilOrder();
-    }
-        public void run () {
-            nextStep();
-        }
-
-        public void nextStep () {
-            while (this.state != STOPPED) {
-                try {
-                    if (this.state == GOINGDOWN) {
-                        goDown();
-
-                        Thread.sleep(10);
-                    } else {
-                        goDown();
-                        Thread.sleep(10);
-                    }
-                } catch (Exception e) {
-                    System.out.println("Error in elevator motor brake");
-                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
+
+    void setGoingNextDown() {state = GOINGNEXTDOWN;}
+    void setGoingNextUp() {state = GOINGNEXTUP;}
+    void setGoingDown() {state = GOINGDOWN;}
+    void setGoingUp() {state = GOINGUP;}
+
+    private void reachNextFloor() throws InterruptedException {
+        if (state == GOINGNEXTDOWN) {
+            goDown();
+            sleep(10);
+        }
+        if (state == GOINGNEXTUP) {
+            goUp();
+            sleep(10);
+        }
+        while (state == GOINGNEXTDOWN && y%100 != 0) {
+            goDown();
+            sleep(10);
+        }
+        while (state == GOINGNEXTUP && y%100 != 0) {
+            goUp();
+            sleep(10);
+        }
+    }
+
+    private void nextStep() throws InterruptedException {
+        while (state == GOINGDOWN) {
+            goDown();
+            sleep(10);
+        }
+        while (state == GOINGUP) {
+            goUp();
+            sleep(10);
+        }
+        if(state == GOINGNEXTDOWN || state == GOINGNEXTUP) {
+            reachNextFloor();
+            stopUntilOrder();
+        }
+    }
+}
 
 
