@@ -18,8 +18,17 @@ public class FloorCallListener implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        System.out.println("Appel à l'étage " + floor);
-        controlCommand.addCall(floor);
+        if(e.getActionCommand() == "\\/") {
+            System.out.println("Appel à l'étage " + floor + "en descente");
+            controlCommand.addCallDown(floor);
+        }
+        else if(e.getActionCommand() == "/\\") {
+            System.out.println("Appel à l'étage " + floor + "en montée");
+            controlCommand.addCallUp(floor);
+        } else {
+            System.out.println("Appel à l'étage " + floor);
+            controlCommand.addCall(floor);
+        }
     }
 
     public static void setControlCommand(ControlCommand newControlCommand)
