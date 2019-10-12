@@ -2,10 +2,13 @@ package control;
 
 import utils.Direction;
 import utils.ControllerState;
+import utils.ElevatorState;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static utils.ElevatorState.*;
 
 public class ControlCommand
 {
@@ -17,6 +20,7 @@ public class ControlCommand
     private int aimedFloor;
     private boolean emergency;
     private ElevatorSimulator elevatorSimulator;
+    private ElevatorListener elevatorListener;
 
     public ControlCommand(int floorNumber) {
         this.callsUp = new ArrayList<>();
@@ -25,9 +29,12 @@ public class ControlCommand
         this.direction = Direction.NONE;
         this.currentFloor = 0;
         this.emergency = false;
-        this.elevatorSimulator = new ElevatorSimulator(floorNumber);
 
-        new ElevatorListener(elevatorSimulator, this);
+        this.elevatorSimulator = new ElevatorSimulator(floorNumber);
+        elevatorSimulator.start();
+
+        elevatorListener = new ElevatorListener(elevatorSimulator, this);
+        elevatorListener.start();
     }
 
     public void addCallUp(int floorNb){

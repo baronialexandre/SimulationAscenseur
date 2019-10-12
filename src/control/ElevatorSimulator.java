@@ -48,6 +48,7 @@ public class ElevatorSimulator extends Thread {
     void setGoingNextUp() {state = GOINGNEXTUP;}
     void setGoingDown() {state = GOINGDOWN;}
     void setGoingUp() {state = GOINGUP;}
+    ElevatorState getGoingState() {return state;}
 
     private void reachNextFloor() throws InterruptedException {
         if (state == GOINGNEXTDOWN) {
