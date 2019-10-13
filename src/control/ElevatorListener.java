@@ -11,18 +11,14 @@ public class ElevatorListener extends Thread {
 
     @Override
     public void run() {
-        boolean debug = true;
         for(;;) {
-            int y = elevatorSimulator.getY();
-            if (y % 100 == 0) {
-                if(debug) {
-                    debug = false;
-                    System.out.println("Un étage a été franchis");
-                }
-                controlCommand.setCurrentFloor(elevatorSimulator.getY() / 100);
+            int y;
+            synchronized (elevatorSimulator) {
+                y = elevatorSimulator.getY();
             }
-            else {
-                debug = true;
+            if (y % 100 == 0) {
+                //System.out.println("Un étage a été franchis"); //todo: is working => on capte bien l'étage et ça renseigne bien controlCommand
+                controlCommand.setCurrentFloor(y / 100);
             }
         }
     }

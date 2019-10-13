@@ -1,19 +1,23 @@
 package control;
 
+import ui.ElevatorViewPanel;
 import utils.ElevatorState;
 
 import static utils.ElevatorState.*;
 
 public class ElevatorSimulator extends Thread {
 
-    private ElevatorState state;
+    private ElevatorState state=STOPPED;
 
     private int y = 0;
 
     private int floorNumber;
 
-    ElevatorSimulator(int floorNumber) {
+    ElevatorViewPanel elevatorViewPanel;
+
+    ElevatorSimulator(int floorNumber, ElevatorViewPanel elevatorViewPanel) { //todo: SALE => elevatorViewPanel est passé en arg pour faire le lien interface utilisateur <=> code control par MainWindows
         this.floorNumber = floorNumber;
+        this.elevatorViewPanel = elevatorViewPanel; //todo: SALE => on en a besoin pour goUp et goDown pour faire avancer le curseur
     }
 
     int getY() {
@@ -22,10 +26,12 @@ public class ElevatorSimulator extends Thread {
 
     private void goUp() {
         y++;
+        elevatorViewPanel.ascenseur.setValue(y);
     }
 
     private void goDown() {
         y--;
+        elevatorViewPanel.ascenseur.setValue(y);
     }
 
     void stopUntilOrder() {state = STOPPED; }
@@ -44,11 +50,21 @@ public class ElevatorSimulator extends Thread {
         }
     }
 
-    void setGoingNextDown() {state = GOINGNEXTDOWN;}
-    void setGoingNextUp() {state = GOINGNEXTUP;}
-    void setGoingDown() {state = GOINGDOWN;}
-    void setGoingUp() {state = GOINGUP;}
-    ElevatorState getGoingState() {return state;}
+    void setGoingNextDown() {
+        state = GOINGNEXTDOWN;
+    }
+    void setGoingNextUp() {
+        state = GOINGNEXTUP;
+    }
+    void setGoingDown() {
+        state = GOINGDOWN;
+    }
+    void setGoingUp() {
+        state = GOINGUP;
+    }
+    ElevatorState getGoingState() {
+        return state;
+    }
 
     private void reachNextFloor() throws InterruptedException {
         if (state == GOINGNEXTDOWN) {

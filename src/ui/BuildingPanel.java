@@ -5,7 +5,8 @@ import java.awt.*;
 
 public class BuildingPanel extends JPanel
 {
-    public BuildingPanel(int nbEtage)
+    JPanel elevatorView;
+    BuildingPanel(int nbEtage)
     {
         super(new BorderLayout());
 
@@ -18,7 +19,7 @@ public class BuildingPanel extends JPanel
             floors.add(new FloorPanel(i,nbEtage));
         this.add(floors, BorderLayout.CENTER);
 
-        JPanel elevatorView = new ElevatorViewPanel(nbEtage);
+        elevatorView = new ElevatorViewPanel(nbEtage);
         this.add(elevatorView, BorderLayout.WEST);
 
 

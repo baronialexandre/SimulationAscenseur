@@ -6,9 +6,11 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 
 public class ElevatorViewPanel extends JPanel {
+    public JSlider ascenseur;
+
     public ElevatorViewPanel(int nbEtage) {
         super(new BorderLayout());
-        JSlider ascenseur = new JSlider();
+        ascenseur = new JSlider();
         ascenseur.setOrientation(SwingConstants.VERTICAL);
         ascenseur.setMinimum(0);
         ascenseur.setMaximum(nbEtage*100);

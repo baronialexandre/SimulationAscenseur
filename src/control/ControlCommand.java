@@ -1,5 +1,6 @@
 package control;
 
+import ui.ElevatorViewPanel;
 import utils.Direction;
 import utils.ControllerState;
 import utils.ElevatorState;
@@ -22,7 +23,7 @@ public class ControlCommand
     private ElevatorSimulator elevatorSimulator;
     private ElevatorListener elevatorListener;
 
-    public ControlCommand(int floorNumber) {
+    public ControlCommand(int floorNumber, ElevatorViewPanel elevatorViewPanel) { //todo: SALE => elevatorViewPanel est passé en arg pour faire le lien interface utilisateur <=> code control par MainWindows
         this.callsUp = new ArrayList<>();
         this.callsDown = new ArrayList<>();
         this.state = ControllerState.WAIT;
@@ -30,7 +31,7 @@ public class ControlCommand
         this.currentFloor = 0;
         this.emergency = false;
 
-        this.elevatorSimulator = new ElevatorSimulator(floorNumber);
+        this.elevatorSimulator = new ElevatorSimulator(floorNumber, elevatorViewPanel); //todo: SALE => elevatorViewPanel est passé en arg pour faire le lien interface utilisateur <=> code control par MainWindows
         elevatorSimulator.start();
 
         elevatorListener = new ElevatorListener(elevatorSimulator, this);
@@ -40,12 +41,14 @@ public class ControlCommand
     public void addCallUp(int floorNb){
         callsUp.add(floorNb);
         Collections.sort(callsUp);
+        modifyStateAfterCall();
     }
 
     public void addCallDown(int floorNb){
         callsDown.add(floorNb);
         //Collections.sort(callsDown,Collections.reverseOrder());
         callsDown.sort(Collections.reverseOrder()); // Conseillé
+        modifyStateAfterCall();
     }
 
     public void addCall(int aimedFloorNb){
@@ -53,6 +56,34 @@ public class ControlCommand
             addCallUp(aimedFloorNb);
         else if (aimedFloorNb < currentFloor && !callsDown.contains(aimedFloorNb))
             addCallDown(aimedFloorNb);
+    }
+
+    public void modifyStateAfterCall()
+    {
+        //aimedFloor ne change jamais
+        if(!callsDown.isEmpty()) {
+            aimedFloor = callsDown.get(0);
+        }
+        if(!callsUp.isEmpty()) {
+            aimedFloor = callsUp.get(0);
+        }
+
+        if(currentFloor - aimedFloor == 0) {
+            //aimedFloorReached
+            elevatorSimulator.stopUntilOrder();
+        }
+        if(currentFloor - aimedFloor == 1) {
+            elevatorSimulator.setGoingNextDown();
+        }
+        else if(currentFloor - aimedFloor == -1) {
+            elevatorSimulator.setGoingNextUp();
+        }
+        else if(currentFloor - aimedFloor > 1) {
+            elevatorSimulator.setGoingDown();
+        }
+        else if(currentFloor - aimedFloor < -1) {
+            elevatorSimulator.setGoingUp();
+        }
     }
 
     public ControllerState getState() {
@@ -70,22 +101,6 @@ public class ControlCommand
     // quand on set le currentFloor il faut renseigner à elevatorSimulator ce qu'il doit faire par son état
     void setCurrentFloor(int currentFloor) {
         this.currentFloor = currentFloor;
-        if(currentFloor - aimedFloor == 0) {
-            //aimedFloorReached
-            elevatorSimulator.stopUntilOrder();
-        }
-        if(currentFloor - aimedFloor == 1) {
-            elevatorSimulator.setGoingNextDown();
-        }
-        else if(currentFloor - aimedFloor == -1) {
-            elevatorSimulator.setGoingNextUp();
-        }
-        else if(currentFloor - aimedFloor > 1) {
-            elevatorSimulator.setGoingDown();
-        }
-        else if(currentFloor - aimedFloor < -1) {
-            elevatorSimulator.setGoingUp();
-        }
     }
 
     public int getCurrentFloor() {
