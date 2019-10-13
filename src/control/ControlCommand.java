@@ -25,7 +25,7 @@ public class ControlCommand
         this.direction = Direction.NONE;
         this.currentFloor = 0;
         this.emergency = false;
-        this.elevatorSimulator = new ElevatorSimulator(floorNumber, 0);
+        this.elevatorSimulator = new ElevatorSimulator(floorNumber);
     }
 
     public void addCallUp(int floorNb){
