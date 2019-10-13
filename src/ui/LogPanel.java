@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class LogPanel extends JPanel
 {
-    TextArea logTextArea;
+    public TextArea logTextArea;
 
     public LogPanel()
     {

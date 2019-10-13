@@ -26,17 +26,18 @@ public class MainWindow extends JFrame
 
         JPanel mainPane = new JPanel(new GridLayout(1,2));
 
-        JPanel leftPane = new BuildingPanel(nbEtage);
+        LogPanel logPanel = new LogPanel();
+
+        JPanel leftPane = new BuildingPanel(nbEtage, logPanel);
         mainPane.add(leftPane);
 
-        JPanel rightPane = new ElevatorPanel(nbEtage);
+        JPanel rightPane = new ElevatorPanel(nbEtage, logPanel);
         mainPane.add(rightPane);
 
         this.setSize(1280,720);
         this.setContentPane(mainPane);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
-
 
         ControlCommand controlCommand = new ControlCommand(nbEtage, (ElevatorViewPanel)((BuildingPanel) leftPane).elevatorView);
 

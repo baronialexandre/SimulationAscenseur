@@ -12,7 +12,7 @@ public class KeyboardPanel extends JPanel
 {
     public ControlCommand controlCommand;
 
-    public KeyboardPanel(int nbEtage)
+    public KeyboardPanel(int nbEtage, LogPanel logPanel)
     {
         super(new BorderLayout());
         this.setBackground(new Color(105, 5, 254));
@@ -34,7 +34,7 @@ public class KeyboardPanel extends JPanel
         {
             buttonArray[i] = "" + i;
             tab_button[i] = new JButton(buttonArray[i]);
-            tab_button[i].addActionListener(new FloorCallListener(i));
+            tab_button[i].addActionListener(new FloorCallListener(i,logPanel));
             floor.add(tab_button[i]);
         }
         this.add(floor);
@@ -42,11 +42,11 @@ public class KeyboardPanel extends JPanel
 
         JButton emergencyButton = new JButton("Arrêt d'Urgence");
         emergencyButton.setSize(12, 12);
-        emergencyButton.addActionListener(new EmergencyActionListener());
+        emergencyButton.addActionListener(new EmergencyActionListener(logPanel));
         this.add(emergencyButton);
 
         JButton restartButton = new JButton("Redémarrer");
-        restartButton.addActionListener(new RestartActionListener());
+        restartButton.addActionListener(new RestartActionListener(logPanel));
 
         this.add(restartButton);
     }

@@ -1,6 +1,7 @@
 package ui.listeners;
 
 import control.ControlCommand;
+import ui.LogPanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,11 +9,13 @@ import java.awt.event.ActionListener;
 public class FloorCallListener implements ActionListener
 {
     private static ControlCommand controlCommand;
+    private LogPanel logPanel;
     private int floor;
 
-    public FloorCallListener(int floor)
+    public FloorCallListener(int floor, LogPanel logPanel)
     {
         this.floor = floor;
+        this.logPanel = logPanel;
     }
 
     @Override
@@ -20,15 +23,15 @@ public class FloorCallListener implements ActionListener
     {
         switch (e.getActionCommand()) {
             case "\\/":
-                System.out.println("Appel à l'étage " + floor + " en descente");
+                logPanel.logTextArea.append("Appel à l'étage " + floor + " en descente \n");
                 controlCommand.addCallDown(floor);
                 break;
             case "/\\":
-                System.out.println("Appel à l'étage " + floor + " en montée");
+                logPanel.logTextArea.append("Appel à l'étage " + floor + " en montée \n");
                 controlCommand.addCallUp(floor);
                 break;
             default:
-                System.out.println("Appel à l'étage " + floor);
+                logPanel.logTextArea.append("Appel à l'étage " + floor +" \n");
                 controlCommand.addCall(floor);
                 break;
         }

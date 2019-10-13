@@ -7,20 +7,20 @@ import java.awt.*;
 
 public class FloorPanel extends JPanel
 {
-    public FloorPanel(int floorId, int nbEtage)
+    public FloorPanel(int floorId, int nbEtage, LogPanel logPanel)
     {
         super();
         this.add(new JLabel(String.valueOf(floorId)));
         if(!(floorId == nbEtage-1))
         {
             JButton upButton = new JButton("/\\");
-            upButton.addActionListener(new FloorCallListener(floorId));
+            upButton.addActionListener(new FloorCallListener(floorId,logPanel));
             this.add(upButton);
         }
         if(!(floorId == 0))
         {
             JButton downButton = new JButton("\\/");
-            downButton.addActionListener(new FloorCallListener(floorId));
+            downButton.addActionListener(new FloorCallListener(floorId,logPanel));
             this.add(downButton);
         }
         this.setBackground(new Color(250/nbEtage*(nbEtage-floorId),250/nbEtage*floorId,255));
