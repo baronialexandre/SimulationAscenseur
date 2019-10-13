@@ -1,53 +1,83 @@
 package ui;
 
-import control.ControlCommand;
 import ui.listeners.EmergencyActionListener;
 import ui.listeners.FloorCallListener;
 import ui.listeners.RestartActionListener;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
+
+import static java.awt.Color.RED;
 
 public class KeyboardPanel extends JPanel
 {
-    public ControlCommand controlCommand;
 
     public KeyboardPanel(int nbEtage, LogPanel logPanel)
     {
-        super(new BorderLayout());
-        this.setBackground(new Color(105, 5, 254));
+        super();
+
+
+        JPanel interiorLiftLabelPanel = new JPanel();
+        JPanel outsidePanel= new JPanel();
+        JPanel buttonsPanel = new JPanel();
+        JPanel floor = new JPanel();
+        buttonsPanel.setPreferredSize(new Dimension(480,17*nbEtage+60));
+        outsidePanel.add(buttonsPanel);
+
+        JLabel interiorLiftLabel = new JLabel("Interieur de l'ascenseur");
+        interiorLiftLabelPanel.add(interiorLiftLabel);
+
+        this.add(interiorLiftLabelPanel, BorderLayout.NORTH);
+        this.add(outsidePanel,BorderLayout.SOUTH);
+
+        Border blackBottomLine = BorderFactory.createMatteBorder(0, 0, 2, 0, Color.DARK_GRAY);
+        this.setBorder(blackBottomLine);
 
         GridLayout buttonContainer = new GridLayout(1, 3);
-        buttonContainer.setHgap(5); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
-        buttonContainer.setVgap(5);
-
-        GridLayout floorButtonContainer = new GridLayout(2, 3);
-
-        this.setLayout(buttonContainer);
+        GridLayout floorButtonContainer = new GridLayout(nbEtage/3+2, nbEtage/8+2);
+        buttonsPanel.setLayout(buttonContainer);
+        floor.setLayout(floorButtonContainer);
 
         String[] buttonArray = new String[nbEtage];
         JButton[] tab_button = new JButton[buttonArray.length];
-        JPanel floor = new JPanel();
-        floor.setLayout(floorButtonContainer);
 
+        floor.setPreferredSize(new Dimension(10,10));
         for (int i = 0; i < nbEtage; i++)
         {
+            JPanel buttonPanel = new JPanel();
             buttonArray[i] = "" + i;
             tab_button[i] = new JButton(buttonArray[i]);
+            tab_button[i].addActionListener(new FloorCallListener(i));
+            tab_button[i].setPreferredSize(new Dimension(50,40));
+            buttonPanel.add(tab_button[i]);
+            floor.add(buttonPanel);
             tab_button[i].addActionListener(new FloorCallListener(i,logPanel));
             floor.add(tab_button[i]);
         }
-        this.add(floor);
+        buttonsPanel.add(floor);
 
-
+        JPanel stopButtonPanel = new JPanel();
         JButton emergencyButton = new JButton("Arrêt d'Urgence");
+        emergencyButton.setPreferredSize(new Dimension(130, 40));
+        emergencyButton.setBackground(RED);
+        emergencyButton.addActionListener(new EmergencyActionListener());
+        buttonsPanel.add(stopButtonPanel);
+        stopButtonPanel.add(emergencyButton);
+
         emergencyButton.setSize(12, 12);
         emergencyButton.addActionListener(new EmergencyActionListener(logPanel));
         this.add(emergencyButton);
 
+
+        JPanel restartButtonPanel = new JPanel();
         JButton restartButton = new JButton("Redémarrer");
+        restartButton.setPreferredSize(new Dimension(120, 40));
+        restartButton.setBackground(Color.GREEN);
+        restartButton.addActionListener(new RestartActionListener());
         restartButton.addActionListener(new RestartActionListener(logPanel));
 
-        this.add(restartButton);
+        buttonsPanel.add(restartButtonPanel);
+        restartButtonPanel.add(restartButton);
     }
 }
