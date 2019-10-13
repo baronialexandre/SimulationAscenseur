@@ -20,11 +20,11 @@ public class FloorCallListener implements ActionListener
     {
         switch (e.getActionCommand()) {
             case "\\/":
-                System.out.println("Appel à l'étage " + floor + "en descente");
+                System.out.println("Appel à l'étage " + floor + " en descente");
                 controlCommand.addCallDown(floor);
                 break;
             case "/\\":
-                System.out.println("Appel à l'étage " + floor + "en montée");
+                System.out.println("Appel à l'étage " + floor + " en montée");
                 controlCommand.addCallUp(floor);
                 break;
             default:

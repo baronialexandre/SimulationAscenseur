@@ -9,15 +9,12 @@ public class ElevatorSimulator extends Thread {
 
     private ElevatorState state=STOPPED;
 
-    private int y = 0;
+    private int y = 50;
 
     private int floorNumber;
 
-    ElevatorViewPanel elevatorViewPanel;
-
-    ElevatorSimulator(int floorNumber, ElevatorViewPanel elevatorViewPanel) { //todo: SALE => elevatorViewPanel est passé en arg pour faire le lien interface utilisateur <=> code control par MainWindows
+    ElevatorSimulator(int floorNumber) {
         this.floorNumber = floorNumber;
-        this.elevatorViewPanel = elevatorViewPanel; //todo: SALE => on en a besoin pour goUp et goDown pour faire avancer le curseur
     }
 
     int getY() {
@@ -26,12 +23,10 @@ public class ElevatorSimulator extends Thread {
 
     private void goUp() {
         y++;
-        elevatorViewPanel.ascenseur.setValue(y);
     }
 
     private void goDown() {
         y--;
-        elevatorViewPanel.ascenseur.setValue(y);
     }
 
     void stopUntilOrder() {state = STOPPED; }
@@ -75,11 +70,11 @@ public class ElevatorSimulator extends Thread {
             goUp();
             sleep(10);
         }
-        while (state == GOINGNEXTDOWN && y%100 != 0) {
+        while (state == GOINGNEXTDOWN && y%100 + 50 != 0) {
             goDown();
             sleep(10);
         }
-        while (state == GOINGNEXTUP && y%100 != 0) {
+        while (state == GOINGNEXTUP && y%100 + 50 != 0) {
             goUp();
             sleep(10);
         }

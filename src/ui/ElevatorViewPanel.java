@@ -18,12 +18,13 @@ public class ElevatorViewPanel extends JPanel {
         ascenseur.setMinorTickSpacing(50);
         //ascenseur.setMajorTickSpacing(100);
         ascenseur.setPaintTicks(true);
+        /*
         ascenseur.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 System.out.println(ascenseur.getValue());
             }
-        });
+        });*/
 
         this.add(ascenseur);
         //this.setSize(100,720);

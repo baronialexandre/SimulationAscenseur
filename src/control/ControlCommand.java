@@ -21,9 +21,8 @@ public class ControlCommand
     private int aimedFloor;
     private boolean emergency;
     private ElevatorSimulator elevatorSimulator;
-    private ElevatorListener elevatorListener;
 
-    public ControlCommand(int floorNumber, ElevatorViewPanel elevatorViewPanel) { //todo: SALE => elevatorViewPanel est passé en arg pour faire le lien interface utilisateur <=> code control par MainWindows
+    public ControlCommand(int floorNumber, ElevatorViewPanel elevatorViewPanel) {
         this.callsUp = new ArrayList<>();
         this.callsDown = new ArrayList<>();
         this.state = ControllerState.WAIT;
@@ -31,10 +30,10 @@ public class ControlCommand
         this.currentFloor = 0;
         this.emergency = false;
 
-        this.elevatorSimulator = new ElevatorSimulator(floorNumber, elevatorViewPanel); //todo: SALE => elevatorViewPanel est passé en arg pour faire le lien interface utilisateur <=> code control par MainWindows
+        this.elevatorSimulator = new ElevatorSimulator(floorNumber);
         elevatorSimulator.start();
 
-        elevatorListener = new ElevatorListener(elevatorSimulator, this);
+        ElevatorListener elevatorListener = new ElevatorListener(elevatorSimulator, this, elevatorViewPanel);
         elevatorListener.start();
     }
 
