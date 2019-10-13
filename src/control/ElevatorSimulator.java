@@ -92,8 +92,8 @@ public class ElevatorSimulator extends Thread {
         if(state == GOINGNEXTDOWN || state == GOINGNEXTUP) {
             System.out.println("SIM: on va aller chercher un étage");
             reachNextFloor();
-            System.out.println("SIM: Etage atteint, on s'arrete");
-            stopUntilOrder();
+            //System.out.println("SIM: Etage atteint, on s'arrete");
+            //stopUntilOrder();
         }
     }
 }

@@ -66,37 +66,52 @@ public class ControlCommand
     }
 
 
-    public void updateAimedFloor() //todo: update les propriétées/etat du controlcommand
+    public void updateAimedFloor()
     {
         //aimedFloor ne change jamais
-        if(direction != Direction.DOWN && !callsUp.isEmpty() && currentFloor < floorNumber - 1) {
+        if(direction != Direction.DOWN && !callsUp.isEmpty() && currentFloor < floorNumber) {
             for(int i = 0; i < callsUp.size(); ++i){
                 if(aimedFloor != callsUp.get(i) && currentFloor < callsUp.get(i) && callsUp.get(i) < floorNumber){
-                    aimedFloor = callsUp.get(0);
+                    aimedFloor = callsUp.get(i);
                     System.out.println("CC on va UP a letage " + aimedFloor);
                     updateElevatorState();
                     break;
                 }
             }
         }
-        if(direction != Direction.UP && !callsDown.isEmpty() && currentFloor > 0) {
-            for(int i = 0; i < callsDown.size(); ++i){
+
+        if(direction != Direction.UP && !callsDown.isEmpty() && currentFloor >= 0) {
+            for(int i = 0; i < callsDown.size(); ++i){/*
+                System.out.println(aimedFloor != callsDown.get(i));
+                System.out.println(currentFloor > callsDown.get(i));
+                System.out.println(currentFloor >= 0);*/
                 if(aimedFloor != callsDown.get(i) && currentFloor > callsDown.get(i) && callsDown.get(i) >= 0){
-                    aimedFloor = callsDown.get(0);
+                    aimedFloor = callsDown.get(i);
                     System.out.println("CC on va DOWN a letage " + aimedFloor);
+                    updateElevatorState();
+                    return;
+                }
+            } //todo: cette deuxieme boucle est la clée au probleme actuel
+            for(int i = 0; i < callsDown.size(); ++i){
+                System.out.println(aimedFloor != callsDown.get(i));
+                System.out.println(currentFloor >= 0);
+                if(aimedFloor != callsDown.get(i) && callsDown.get(i) >= 0){
+                    aimedFloor = callsDown.get(i);
+                    System.out.println("CC on va up a letage DOWN  " + aimedFloor);
                     updateElevatorState();
                     break;
                 }
             }
+
         }
         System.out.println("UPs "+callsUp);
         System.out.println("DOWNs "+callsDown);
     }
 
     public void updateElevatorState(){
-        if(currentFloor - aimedFloor == 0) {
+        if(currentFloor == aimedFloor) {
             //aimedFloorReached
-            System.out.println("CC on est arrivé");
+            System.out.println("CC on est arrivé etage"+ currentFloor);
             if(direction.equals(Direction.UP)){
                 callsUp.remove(Integer.valueOf(currentFloor));
                 if(currentFloor == floorNumber-1)
@@ -138,7 +153,6 @@ public class ControlCommand
     }
 
 
-    // todo: quand on set le currentFloor il faut renseigner à elevatorSimulator ce qu'il doit faire par son état
     void setCurrentFloor(int currentFloor) {
         this.currentFloor = currentFloor;
         updateElevatorState();
