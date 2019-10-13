@@ -31,7 +31,7 @@ public class FloorCallListener implements ActionListener
                 controlCommand.addCallUp(floor);
                 break;
             default:
-                logPanel.logTextArea.append("Appel à l'étage " + floor +" \n");
+                logPanel.logTextArea.append("Appel de l'ascenseur vers l'étage " + floor +" \n");
                 controlCommand.addCall(floor);
                 break;
         }
