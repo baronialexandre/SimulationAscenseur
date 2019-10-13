@@ -1,5 +1,6 @@
 package ui;
 
+import control.ControlCommand;
 import ui.listeners.EmergencyActionListener;
 import ui.listeners.FloorCallListener;
 import ui.listeners.RestartActionListener;
@@ -48,12 +49,10 @@ public class KeyboardPanel extends JPanel
             JPanel buttonPanel = new JPanel();
             buttonArray[i] = "" + i;
             tab_button[i] = new JButton(buttonArray[i]);
-            tab_button[i].addActionListener(new FloorCallListener(i));
+            tab_button[i].addActionListener(new FloorCallListener(i,logPanel));
             tab_button[i].setPreferredSize(new Dimension(50,40));
             buttonPanel.add(tab_button[i]);
             floor.add(buttonPanel);
-            tab_button[i].addActionListener(new FloorCallListener(i,logPanel));
-            floor.add(tab_button[i]);
         }
         buttonsPanel.add(floor);
 
@@ -61,20 +60,16 @@ public class KeyboardPanel extends JPanel
         JButton emergencyButton = new JButton("Arrêt d'Urgence");
         emergencyButton.setPreferredSize(new Dimension(130, 40));
         emergencyButton.setBackground(RED);
-        emergencyButton.addActionListener(new EmergencyActionListener());
+        emergencyButton.addActionListener(new EmergencyActionListener(logPanel));
         buttonsPanel.add(stopButtonPanel);
         stopButtonPanel.add(emergencyButton);
 
-        emergencyButton.setSize(12, 12);
-        emergencyButton.addActionListener(new EmergencyActionListener(logPanel));
-        this.add(emergencyButton);
 
 
         JPanel restartButtonPanel = new JPanel();
         JButton restartButton = new JButton("Redémarrer");
         restartButton.setPreferredSize(new Dimension(120, 40));
         restartButton.setBackground(Color.GREEN);
-        restartButton.addActionListener(new RestartActionListener());
         restartButton.addActionListener(new RestartActionListener(logPanel));
 
         buttonsPanel.add(restartButtonPanel);
