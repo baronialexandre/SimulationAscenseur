@@ -34,7 +34,7 @@ public class MainWindow extends JFrame
         JPanel rightPane = new ElevatorPanel(nbEtage, logPanel);
         mainPane.add(rightPane);
 
-        this.setSize(1280,720);
+        this.setSize(820,460);
         this.setContentPane(mainPane);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);

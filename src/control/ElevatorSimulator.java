@@ -70,11 +70,11 @@ public class ElevatorSimulator extends Thread {
             goUp();
             sleep(10);
         }
-        while (state == GOINGNEXTDOWN && y%100 + 50 != 0) {
+        while (state == GOINGNEXTDOWN && y - 50 % 100 != 0) {
             goDown();
             sleep(10);
         }
-        while (state == GOINGNEXTUP && y%100 + 50 != 0) {
+        while (state == GOINGNEXTUP && y - 50 %100 != 0) {
             goUp();
             sleep(10);
         }
@@ -90,7 +90,9 @@ public class ElevatorSimulator extends Thread {
             sleep(10);
         }
         if(state == GOINGNEXTDOWN || state == GOINGNEXTUP) {
+            System.out.println("on va aller chercher un étage");
             reachNextFloor();
+            System.out.println("Etage atteint, on s'arrete");
             stopUntilOrder();
         }
     }

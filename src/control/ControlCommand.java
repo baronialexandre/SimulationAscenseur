@@ -57,7 +57,7 @@ public class ControlCommand
             addCallDown(aimedFloorNb);
     }
 
-    public void modifyStateAfterCall()
+    public void modifyStateAfterCall() //todo: update les propriétées/etat du controlcommand
     {
         //aimedFloor ne change jamais
         if(!callsDown.isEmpty()) {
@@ -85,7 +85,7 @@ public class ControlCommand
         }
     }
 
-    public ControllerState getState() {
+    public ControllerState getControlerState() {
         return state;
     }
 
@@ -97,9 +97,11 @@ public class ControlCommand
         return emergency;
     }
 
-    // quand on set le currentFloor il faut renseigner à elevatorSimulator ce qu'il doit faire par son état
+    // todo: quand on set le currentFloor il faut renseigner à elevatorSimulator ce qu'il doit faire par son état
     void setCurrentFloor(int currentFloor) {
         this.currentFloor = currentFloor;
+
+
     }
 
     public int getCurrentFloor() {
