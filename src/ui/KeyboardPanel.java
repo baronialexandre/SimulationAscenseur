@@ -26,7 +26,7 @@ public class KeyboardPanel extends JPanel
         buttonsPanel.setPreferredSize(new Dimension(480,17*nbEtage+60));
         outsidePanel.add(buttonsPanel);
 
-        JLabel interiorLiftLabel = new JLabel("Interieur de l'ascenseur");
+        JLabel interiorLiftLabel = new JLabel("INTERIEUR DE L'ASCENSEUR");
         interiorLiftLabelPanel.add(interiorLiftLabel);
 
         this.add(interiorLiftLabelPanel, BorderLayout.NORTH);

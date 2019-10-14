@@ -9,13 +9,23 @@ public class LogPanel extends JPanel
 
     public LogPanel()
     {
-        JLabel title = new JLabel("LOGS");
-        this.add(title);
+        JPanel outsidePanel = new JPanel();
+        JPanel labelPanel = new JPanel();
+        JPanel logAreaPanel = new JPanel();
+        JLabel title = new JLabel("AFFICHAGE DES LOGS");
+        labelPanel.add(title);
+        outsidePanel.add(labelPanel,BorderLayout.NORTH);
+        outsidePanel.setPreferredSize(new Dimension(300,180));
 
         logTextArea = new TextArea("" ,10,40, TextArea.SCROLLBARS_NONE);
+
         logTextArea.setEditable(false);
         logTextArea.setBackground(new Color(255,255,255));
-        this.add(logTextArea);
+        logTextArea.setForeground(Color.WHITE);
+        logTextArea.setBackground(Color.DARK_GRAY);
+        logAreaPanel.add(logTextArea);
+        outsidePanel.add(logAreaPanel,BorderLayout.SOUTH);
+        this.add(outsidePanel);
     }
 
     public void addMessage(String message)

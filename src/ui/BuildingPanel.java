@@ -10,7 +10,7 @@ public class BuildingPanel extends JPanel
     {
         super(new BorderLayout());
 
-        JLabel north = new JLabel("Hotel");
+        JLabel north = new JLabel("HOTEL");
         this.add(north, BorderLayout.NORTH);
 
         JPanel floors = new JPanel();
