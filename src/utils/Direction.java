@@ -2,6 +2,5 @@ package utils;
 
 public enum Direction {
     UP,
-    DOWN,
-    NONE
+    DOWN
 }
