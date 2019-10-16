@@ -7,20 +7,12 @@ import ui.listeners.RestartActionListener;
 
 import javax.swing.*;
 import java.awt.*;
-
-/*todo: Check :
-*   -> Le listener fonctionne : un cas me gêne :
-*      \-> Il peut ne pas bien détecter le changement d'étages
-*      \-> j'ai mis un synchronized, mais je ne sais pas si c'est suffisant pour ne pas "sauter" un changement de y
-*         \-> En débug j'ai eu des cas ou à chaque itération de listener, y faisait y:97 ; y:98 ; y:101
-*             Donc sautait un modulo de 100 et sautait donc un étage...
-*   -> L'appel à l'étage 1 fonctionne mais l'ascenseur ne repart pas
-* */
-
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class MainWindow extends JFrame
 {
-    public MainWindow(int nbEtage)
+    private MainWindow(int nbEtage)
     {
         super("Simulateur Ascenseur");
 
@@ -71,8 +63,17 @@ public class MainWindow extends JFrame
         boxPanel.add(floorSpinner);
         boxPanel.add(okButton);
 
+        floorChoice.addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+                System.exit(0);
+            }
+        });
         floorChoice.setLocationRelativeTo(null);
         floorChoice.setVisible(true);
+
 
         int floors = (int)floorSpinner.getValue();
 

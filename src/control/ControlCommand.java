@@ -24,7 +24,8 @@ public class ControlCommand
     private boolean emergency;
     private ElevatorSimulator elevatorSimulator;
 
-    public ControlCommand(int floorNumber, ElevatorViewPanel elevatorViewPanel) {
+    public ControlCommand(int floorNumber, ElevatorViewPanel elevatorViewPanel)
+    {
         this.callsUp = new ArrayList<>();
         this.callsDown = new ArrayList<>();
         this.state = ControllerState.WAIT;
@@ -40,20 +41,24 @@ public class ControlCommand
         elevatorListener.start();
     }
 
-    public void addCallUp(int floorNb){
+    public void addCallUp(int floorNb)
+    {
         if (emergency)
             return;
-        if(!callsUp.contains(floorNb)){
+        if(!callsUp.contains(floorNb))
+        {
             callsUp.add(floorNb);
             Collections.sort(callsUp);
             updateAimedFloor();
         }
     }
 
-    public void addCallDown(int floorNb){
+    public void addCallDown(int floorNb)
+    {
         if (emergency)
             return;
-        if(!callsDown.contains(floorNb)){
+        if(!callsDown.contains(floorNb))
+        {
             callsDown.add(floorNb);
             //Collections.sort(callsDown,Collections.reverseOrder());
             callsDown.sort(Collections.reverseOrder());
@@ -61,14 +66,16 @@ public class ControlCommand
         }
     }
 
-    public void addCall(int aimedFloorNb){
+    public void addCall(int aimedFloorNb)
+    {
         if (emergency)
             return;
         if (aimedFloorNb > currentFloor && !callsUp.contains(aimedFloorNb))
             addCallUp(aimedFloorNb);
         else if (aimedFloorNb < currentFloor && !callsDown.contains(aimedFloorNb))
             addCallDown(aimedFloorNb);
-        else if (aimedFloorNb == currentFloor){
+        else if (aimedFloorNb == currentFloor)
+        {
             if(direction.equals(Direction.UP))
                 addCallDown(aimedFloorNb);
             else
@@ -81,16 +88,21 @@ public class ControlCommand
     {
         if (emergency)
             return;
-        if(callsUp.isEmpty() && callsDown.isEmpty()){
+        if(callsUp.isEmpty() && callsDown.isEmpty())
+        {
             state = ControllerState.WAIT;
             System.out.println("UpdateAimedFloor "+this);
             return;
         }
 
-        if(direction.equals(Direction.UP)){
-            if(!callsUp.isEmpty()) {
-                for (Integer i : callsUp) {
-                    if (currentFloor < i) {
+        if(direction.equals(Direction.UP))
+        {
+            if(!callsUp.isEmpty())
+            {
+                for (Integer i : callsUp)
+                {
+                    if (currentFloor < i)
+                    {
                         aimedFloor = i;
                         updateElevatorState();
                         System.out.println("UpdateAimedFloor "+this);
@@ -98,10 +110,13 @@ public class ControlCommand
                     }
                 }
             }
-            else{
+            else
+                {
                 Collections.reverse(callsDown);
-                for (Integer i : callsDown) {
-                    if (currentFloor < i){
+                for (Integer i : callsDown)
+                {
+                    if (currentFloor < i)
+                    {
                         aimedFloor = i;
                         updateElevatorState();
                         Collections.reverse(callsDown);

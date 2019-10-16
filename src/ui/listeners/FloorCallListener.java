@@ -23,15 +23,15 @@ public class FloorCallListener implements ActionListener
     {
         switch (e.getActionCommand()) {
             case "\\/":
-                logPanel.logTextArea.append("Appel à l'étage " + floor + " en descente \n");
+                logPanel.addMessage("Appel à l'étage " + floor + " en descente \n");
                 controlCommand.addCallDown(floor);
                 break;
             case "/\\":
-                logPanel.logTextArea.append("Appel à l'étage " + floor + " en montée \n");
+                logPanel.addMessage("Appel à l'étage " + floor + " en montée \n");
                 controlCommand.addCallUp(floor);
                 break;
             default:
-                logPanel.logTextArea.append("Appel de l'ascenseur vers l'étage " + floor +" \n");
+                logPanel.addMessage("Appel de l'ascenseur vers l'étage " + floor +" \n");
                 controlCommand.addCall(floor);
                 break;
         }

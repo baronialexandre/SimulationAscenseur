@@ -7,7 +7,7 @@ public class LogPanel extends JPanel
 {
     public TextArea logTextArea;
 
-    public LogPanel()
+    LogPanel()
     {
         JPanel outsidePanel = new JPanel();
         JPanel labelPanel = new JPanel();
@@ -15,7 +15,7 @@ public class LogPanel extends JPanel
         JLabel title = new JLabel("AFFICHAGE DES LOGS");
         labelPanel.add(title);
         outsidePanel.add(labelPanel,BorderLayout.NORTH);
-        outsidePanel.setPreferredSize(new Dimension(300,180));
+        outsidePanel.setPreferredSize(new Dimension(400,240));
 
         logTextArea = new TextArea("" ,10,40, TextArea.SCROLLBARS_NONE);
 
