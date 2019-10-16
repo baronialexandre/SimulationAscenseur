@@ -14,6 +14,7 @@ import static utils.ElevatorState.*;
 
 public class ControlCommand
 {
+
     private static final long sleepTime = 1000;
     private final int floorNumber;
     private List<Integer> callsUp, callsDown;
@@ -278,6 +279,75 @@ public class ControlCommand
         System.out.println("restart "+this);
         updateElevatorState();
     }
+
+    public int getFloorNumber() {
+        return floorNumber;
+    }
+
+    public List<Integer> getCallsUp() {
+        return callsUp;
+    }
+
+    public void setCallsUp(List<Integer> callsUp) {
+        this.callsUp = callsUp;
+    }
+
+    public List<Integer> getCallsDown() {
+        return callsDown;
+    }
+
+    public void setCallsDown(List<Integer> callsDown) {
+        this.callsDown = callsDown;
+    }
+
+    public ControllerState getState() {
+        return state;
+    }
+
+    public void setState(ControllerState state) {
+        this.state = state;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    public int getCurrentFloor() {
+        return currentFloor;
+    }
+
+    public int getAimedFloor() {
+        return aimedFloor;
+    }
+
+    public void setAimedFloor(int aimedFloor) {
+        this.aimedFloor = aimedFloor;
+    }
+
+    public boolean isEmergency() {
+        return emergency;
+    }
+
+    public void setEmergency(boolean emergency) {
+        this.emergency = emergency;
+    }
+
+    public ElevatorSimulator getElevatorSimulator() {
+        return elevatorSimulator;
+    }
+
+    public void setElevatorSimulator(ElevatorSimulator elevatorSimulator) {
+        this.elevatorSimulator = elevatorSimulator;
+    }
+
+    public static long getSleepTime() {
+        return sleepTime;
+    }
+
 
     @Override
     public String toString() {
