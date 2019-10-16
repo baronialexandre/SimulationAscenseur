@@ -96,7 +96,7 @@ public class ControlCommand
                     }
                 }
             }
-            else{
+            if(!callsDown.isEmpty()){
                 Collections.reverse(callsDown);
                 for (Integer i : callsDown) {
                     if (currentFloor < i){
@@ -125,7 +125,7 @@ public class ControlCommand
                     }
                 }
             }
-            else{
+            if(!callsUp.isEmpty()){
                 Collections.reverse(callsUp);
                 for (Integer i : callsUp) {
                     if (currentFloor > i){
