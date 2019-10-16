@@ -57,7 +57,7 @@ public class KeyboardPanel extends JPanel
 
         JPanel stopButtonPanel = new JPanel();
         JButton emergencyButton = new JButton("Arrêt d'Urgence");
-        emergencyButton.setPreferredSize(new Dimension(130, 40));
+        emergencyButton.setPreferredSize(new Dimension(190, 40));
         emergencyButton.setBackground(RED);
         emergencyButton.addActionListener(new EmergencyActionListener(logPanel));
         buttonsPanel.add(stopButtonPanel);
