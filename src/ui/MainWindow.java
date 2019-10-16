@@ -38,6 +38,7 @@ public class MainWindow extends JFrame
         this.setSize(1280,720);
         this.setContentPane(mainPane);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
 
         ControlCommand controlCommand = new ControlCommand(nbEtage, (ElevatorViewPanel)((BuildingPanel) leftPane).elevatorView);
@@ -70,6 +71,7 @@ public class MainWindow extends JFrame
         boxPanel.add(floorSpinner);
         boxPanel.add(okButton);
 
+        floorChoice.setLocationRelativeTo(null);
         floorChoice.setVisible(true);
 
         int floors = (int)floorSpinner.getValue();
