@@ -18,7 +18,6 @@ public class KeyboardPanel extends JPanel
     {
         super();
 
-
         JPanel interiorLiftLabelPanel = new JPanel();
         JPanel outsidePanel= new JPanel();
         JPanel buttonsPanel = new JPanel();
@@ -63,8 +62,6 @@ public class KeyboardPanel extends JPanel
         emergencyButton.addActionListener(new EmergencyActionListener(logPanel));
         buttonsPanel.add(stopButtonPanel);
         stopButtonPanel.add(emergencyButton);
-
-
 
         JPanel restartButtonPanel = new JPanel();
         JButton restartButton = new JButton("Redémarrer");

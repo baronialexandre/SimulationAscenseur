@@ -12,6 +12,8 @@ import java.awt.event.WindowEvent;
 
 public class MainWindow extends JFrame
 {
+    private static int nbFloors;
+
     private MainWindow(int nbEtage)
     {
         super("Simulateur Ascenseur");
@@ -41,9 +43,11 @@ public class MainWindow extends JFrame
 
     }
 
-    public static void main(String[] args)
+    /**
+     * Fenêtre popup pour paramétrer le nombre d'étages à simuler.
+     */
+    private static void floorChoicePopup()
     {
-        // Fenêtre pour le choix du nombre d'étages
         SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(5, 2, 20, 1);
         JSpinner floorSpinner = new JSpinner(spinnerNumberModel);
         floorSpinner.setSize(50,50);
@@ -75,9 +79,13 @@ public class MainWindow extends JFrame
         floorChoice.setVisible(true);
 
 
-        int floors = (int)floorSpinner.getValue();
+        nbFloors = (int)floorSpinner.getValue();
+    }
 
-        new MainWindow(floors);
+    public static void main(String[] args)
+    {
+        floorChoicePopup();
+        new MainWindow(nbFloors);
     }
 
 }

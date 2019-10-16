@@ -21,7 +21,7 @@ public class LogPanel extends JPanel
 
         logTextArea.setEditable(false);
         logTextArea.setBackground(new Color(255,255,255));
-        logTextArea.setForeground(Color.WHITE);
+        logTextArea.setForeground(Color.GREEN);
         logTextArea.setBackground(Color.DARK_GRAY);
         logAreaPanel.add(logTextArea);
         outsidePanel.add(logAreaPanel,BorderLayout.SOUTH);
