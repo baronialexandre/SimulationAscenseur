@@ -89,13 +89,18 @@ public class ControlCommand
         emergency = true;
         callsUp.clear();
         callsDown.clear();
-        System.out.println("emergency "+this);
         elevatorSimulator.stopUntilOrder();
     }
 
     public void restart(){
         emergency = false;
-        System.out.println("restart "+this);
+        // gestion du aimed floor proche (plus realiste)
+        if(state.equals(ControllerState.MOVEMENT)) {
+            if (direction.equals(Direction.UP))
+                aimedFloor = currentFloor + 1;
+            else
+                aimedFloor = currentFloor - 1;
+        }
         controlStrategy.updateElevatorState(this);
     }
 

@@ -8,7 +8,7 @@
     </inspection_tool>
     <inspection_tool class="Duplicates" enabled="true" level="WEAK WARNING" enabled_by_default="true">
       <Java>
-        <minSize>122</minSize>
+        <minSize>218</minSize>
         <isEnabled>true</isEnabled>
       </Java>
     </inspection_tool>
