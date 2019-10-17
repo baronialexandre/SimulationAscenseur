@@ -8,7 +8,7 @@ import java.util.Collections;
 
 import static java.lang.Thread.sleep;
 
-public class AdvancedControlStategy implements ControlStrategy {
+public class AdvancedControlStrategy implements ControlStrategy {
 
     public void updateAimedFloor(ControlCommand controlCommand)
     {
@@ -73,8 +73,6 @@ public class AdvancedControlStategy implements ControlStrategy {
                 controlCommand.setDirection(Direction.UP);
                 updateAimedFloor(controlCommand);
             }
-            return;
-
         }
     }
 
@@ -83,7 +81,6 @@ public class AdvancedControlStategy implements ControlStrategy {
         if (controlCommand.isEmergency())
             return;
 
-        System.out.println("UpdateElevatorState "+this);
         if(controlCommand.getCurrentFloor() == controlCommand.getAimedFloor()) {
             //controlCommand.getAimedFloor()Reached
             System.out.println("CC on est arrivé etage"+ controlCommand.getCurrentFloor());

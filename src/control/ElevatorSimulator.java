@@ -31,7 +31,6 @@ public class ElevatorSimulator extends Thread {
         y--;
     }
 
-    public void stopUntilOrder() {state = STOPPED; }
 
     public void run() {
         // doit tourner à l'infini
@@ -47,6 +46,9 @@ public class ElevatorSimulator extends Thread {
         }
     }
 
+
+    public void stopUntilOrder() {state = STOPPED; }
+
     public void setGoingNextDown() {
         state = GOINGNEXTDOWN;
     }
@@ -58,9 +60,6 @@ public class ElevatorSimulator extends Thread {
     }
     public void setGoingUp() {
         state = GOINGUP;
-    }
-    ElevatorState getGoingState() {
-        return state;
     }
 
     private void reachNextFloor() throws InterruptedException {

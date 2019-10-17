@@ -1,6 +1,9 @@
 package ui;
 
 import control.ControlCommand;
+import control.strategy.AdvancedControlStrategy;
+import control.strategy.BasicControlStrategy;
+import control.strategy.ControlStrategy;
 import ui.listeners.EmergencyActionListener;
 import ui.listeners.FloorCallListener;
 import ui.listeners.RestartActionListener;
@@ -13,8 +16,9 @@ import java.awt.event.WindowEvent;
 public class MainWindow extends JFrame
 {
     private static int nbFloors;
+    private static ControlStrategy controlStrategy;
 
-    private MainWindow(int nbEtage)
+    private MainWindow()
     {
         super("Simulateur Ascenseur");
 
@@ -22,10 +26,10 @@ public class MainWindow extends JFrame
 
         LogPanel logPanel = new LogPanel();
 
-        BuildingPanel leftPane = new BuildingPanel(nbEtage, logPanel);
+        BuildingPanel leftPane = new BuildingPanel(nbFloors, logPanel);
         mainPane.add(leftPane);
 
-        ElevatorPanel rightPane = new ElevatorPanel(nbEtage, logPanel);
+        ElevatorPanel rightPane = new ElevatorPanel(nbFloors, logPanel);
         mainPane.add(rightPane);
 
         this.setSize(1400,810);
@@ -34,7 +38,7 @@ public class MainWindow extends JFrame
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
-        ControlCommand controlCommand = new ControlCommand(nbEtage, (ElevatorViewPanel) leftPane.elevatorView);
+        ControlCommand controlCommand = new ControlCommand(nbFloors, (ElevatorViewPanel) leftPane.elevatorView, controlStrategy);
 
         FloorCallListener.setControlCommand(controlCommand);
         EmergencyActionListener.setControlCommand(controlCommand);
@@ -57,14 +61,19 @@ public class MainWindow extends JFrame
         JDialog floorChoice = new JDialog(null,"Nombre d'étages", Dialog.ModalityType.APPLICATION_MODAL);
         floorChoice.setSize(350,200);
 
+        JComboBox<String> controlStrategies = new JComboBox<>();
+        controlStrategies.addItem("Advanced Control Strategy");
+        controlStrategies.addItem("Basic Control Strategy");
+
         okButton.addActionListener(e -> floorChoice.dispose());
         JPanel boxPanel = new JPanel();
         boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.PAGE_AXIS));
         boxPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        floorChoice.add(boxPanel);
         boxPanel.add(choiceLabel);
         boxPanel.add(floorSpinner);
+        boxPanel.add(controlStrategies);
         boxPanel.add(okButton);
+        floorChoice.add(boxPanel);
 
         floorChoice.addWindowListener(new WindowAdapter()
         {
@@ -79,12 +88,21 @@ public class MainWindow extends JFrame
 
 
         nbFloors = (int)floorSpinner.getValue();
+        System.out.println((String)controlStrategies.getSelectedItem());
+        switch ((String)controlStrategies.getSelectedItem()){
+            case "Advanced Control Strategy":
+                controlStrategy = new AdvancedControlStrategy();
+                break;
+            case "Basic Control Strategy":
+                controlStrategy = new BasicControlStrategy();
+                break;
+        }
     }
 
     public static void main(String[] args)
     {
         floorChoicePopup();
-        new MainWindow(nbFloors);
+        new MainWindow();
     }
 
 }
