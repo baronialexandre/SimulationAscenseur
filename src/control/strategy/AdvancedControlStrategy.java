@@ -12,8 +12,6 @@ public class AdvancedControlStrategy implements ControlStrategy {
 
     public void updateAimedFloor(ControlCommand controlCommand)
     {
-        System.out.println(controlCommand);
-
         if (controlCommand.isEmergency() || controlCommand.getCallsUp().isEmpty() && controlCommand.getCallsDown().isEmpty()){
             return;
         }

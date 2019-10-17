@@ -4,41 +4,25 @@ import control.ControlCommand;
 import utils.ControllerState;
 import utils.Direction;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 import static java.lang.Thread.sleep;
 
-public class BasicControlStrategy implements ControlStrategy{
- // todo: JE SAIS PAS QUOI FAIRE COMME TRUC BASIQUE
+public class RandomControlStrategy implements ControlStrategy {
+
     public void updateAimedFloor(ControlCommand controlCommand) {
-        if (controlCommand.isEmergency() || controlCommand.getCallsUp().isEmpty() && controlCommand.getCallsDown().isEmpty()){
+        if (controlCommand.isEmergency() || controlCommand.getState().equals(ControllerState.MOVEMENT) || controlCommand.getCallsUp().isEmpty() && controlCommand.getCallsDown().isEmpty()){
             return;
         }
-
-        if(controlCommand.getDirection().equals(Direction.UP)){
-            if(!controlCommand.getCallsUp().isEmpty()) {
-                for (Integer i : controlCommand.getCallsUp()) {
-                    if (controlCommand.getCurrentFloor() < i) {
-                        controlCommand.setAimedFloor(i);
-                        updateElevatorState(controlCommand);
-                        return;
-                    }
-                }
-            }
-            return;
-        }
-
-        if(controlCommand.getDirection().equals(Direction.DOWN)){
-            if(!controlCommand.getCallsDown().isEmpty()) {
-                for (Integer i : controlCommand.getCallsDown()) {
-                    if (controlCommand.getCurrentFloor() > i) {
-                        controlCommand.setAimedFloor(i);
-                        updateElevatorState(controlCommand);
-                        return;
-                    }
-                }
-            }
-        }
+        ArrayList<Integer> calls = new ArrayList<>();
+        if (!controlCommand.getCallsUp().isEmpty())
+            calls.addAll(controlCommand.getCallsUp());
+        if (!controlCommand.getCallsDown().isEmpty())
+            calls.addAll(controlCommand.getCallsDown());
+        Collections.shuffle(calls);
+        controlCommand.setAimedFloor(calls.get(0));
+        updateElevatorState(controlCommand);
     }
 
     public void updateElevatorState(ControlCommand controlCommand) {

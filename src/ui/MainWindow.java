@@ -4,6 +4,7 @@ import control.ControlCommand;
 import control.strategy.AdvancedControlStrategy;
 import control.strategy.BasicControlStrategy;
 import control.strategy.ControlStrategy;
+import control.strategy.RandomControlStrategy;
 import ui.listeners.EmergencyActionListener;
 import ui.listeners.FloorCallListener;
 import ui.listeners.RestartActionListener;
@@ -62,8 +63,9 @@ public class MainWindow extends JFrame
         floorChoice.setSize(350,200);
 
         JComboBox<String> controlStrategies = new JComboBox<>();
-        controlStrategies.addItem("Advanced Control Strategy");
-        controlStrategies.addItem("Basic Control Strategy");
+        controlStrategies.addItem("Advanced");
+        controlStrategies.addItem("Basic");
+        controlStrategies.addItem("Random");
 
         okButton.addActionListener(e -> floorChoice.dispose());
         JPanel boxPanel = new JPanel();
@@ -90,11 +92,14 @@ public class MainWindow extends JFrame
         nbFloors = (int)floorSpinner.getValue();
         System.out.println((String)controlStrategies.getSelectedItem());
         switch ((String)controlStrategies.getSelectedItem()){
-            case "Advanced Control Strategy":
+            case "Advanced":
                 controlStrategy = new AdvancedControlStrategy();
                 break;
-            case "Basic Control Strategy":
+            case "Basic":
                 controlStrategy = new BasicControlStrategy();
+                break;
+            case "Random":
+                controlStrategy = new RandomControlStrategy();
                 break;
         }
     }
