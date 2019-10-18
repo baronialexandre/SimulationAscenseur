@@ -13,9 +13,7 @@ public class BasicControlStrategy implements ControlStrategy{
         if (controlCommand.isEmergency() || controlCommand.getCallsUp().isEmpty() && controlCommand.getCallsDown().isEmpty()){
             return;
         }
-        System.out.println(controlCommand.getDirection().equals(Direction.UP));
         if(controlCommand.getDirection().equals(Direction.UP)){
-            System.out.println(!controlCommand.getCallsDown().isEmpty());
             if(!controlCommand.getCallsUp().isEmpty()) {
                 controlCommand.setAimedFloor(controlCommand.getCallsUp().get(0));
                 updateElevatorState(controlCommand);

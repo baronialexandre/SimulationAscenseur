@@ -89,7 +89,6 @@ public class AdvancedControlStrategy implements ControlStrategy {
             }
             controlCommand.getCallsUp().remove(Integer.valueOf(controlCommand.getCurrentFloor()));
             controlCommand.getCallsDown().remove(Integer.valueOf(controlCommand.getCurrentFloor()));
-            System.out.println(this);
             if (controlCommand.getCurrentFloor() == controlCommand.getFloorNumber() - 1)
                 controlCommand.setDirection(Direction.DOWN);
             else if (controlCommand.getCurrentFloor() == 0)
@@ -101,6 +100,7 @@ public class AdvancedControlStrategy implements ControlStrategy {
             controlCommand.setDirection(Direction.DOWN);
             controlCommand.setState(ControllerState.MOVEMENT);
         } else if (controlCommand.getCurrentFloor() - controlCommand.getAimedFloor() == -1) {
+            controlCommand.getElevatorSimulator().setState(ElevatorState.GOINGNEXTUP);
             controlCommand.getElevatorSimulator().setState(ElevatorState.GOINGNEXTUP);
             controlCommand.setDirection(Direction.UP);
             controlCommand.setState(ControllerState.MOVEMENT);
