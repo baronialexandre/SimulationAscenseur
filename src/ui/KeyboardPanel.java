@@ -14,7 +14,7 @@ import static java.awt.Color.RED;
 public class KeyboardPanel extends JPanel
 {
 
-    public KeyboardPanel(int nbEtage, LogPanel logPanel)
+    public KeyboardPanel(int floorNb, LogPanel logPanel)
     {
         super();
 
@@ -22,7 +22,7 @@ public class KeyboardPanel extends JPanel
         JPanel outsidePanel= new JPanel();
         JPanel buttonsPanel = new JPanel();
         JPanel floor = new JPanel();
-        buttonsPanel.setPreferredSize(new Dimension(480,17*nbEtage+60));
+        buttonsPanel.setPreferredSize(new Dimension(480,17*floorNb+60));
         outsidePanel.add(buttonsPanel);
 
         JLabel interiorLiftLabel = new JLabel("INTERIEUR DE L'ASCENSEUR");
@@ -35,15 +35,15 @@ public class KeyboardPanel extends JPanel
         this.setBorder(blackBottomLine);
 
         GridLayout buttonContainer = new GridLayout(1, 3);
-        GridLayout floorButtonContainer = new GridLayout(nbEtage/3+2, nbEtage/8+2);
+        GridLayout floorButtonContainer = new GridLayout(floorNb/3+2, floorNb/8+2);
         buttonsPanel.setLayout(buttonContainer);
         floor.setLayout(floorButtonContainer);
 
-        String[] buttonArray = new String[nbEtage];
+        String[] buttonArray = new String[floorNb];
         JButton[] tab_button = new JButton[buttonArray.length];
 
         floor.setPreferredSize(new Dimension(10,10));
-        for (int i = 0; i < nbEtage; i++)
+        for (int i = 0; i < floorNb; i++)
         {
             JPanel buttonPanel = new JPanel();
             buttonArray[i] = "" + i;

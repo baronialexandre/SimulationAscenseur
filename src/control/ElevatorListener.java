@@ -20,7 +20,7 @@ public class ElevatorListener extends Thread {
             synchronized (elevatorSimulator) {
                 if (y != elevatorSimulator.getY()){
                     y = elevatorSimulator.getY();
-                    elevatorPanel.ascenseur.setValue(y);
+                    elevatorPanel.elevator.setValue(y);
                     if ((y - 50) % 100 == 0) {
                         controlCommand.setCurrentFloor((y-50)/100);
                     }
