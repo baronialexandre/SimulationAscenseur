@@ -1,6 +1,5 @@
 package control;
 
-import ui.ElevatorViewPanel;
 import utils.ElevatorState;
 
 import static utils.ElevatorState.*;

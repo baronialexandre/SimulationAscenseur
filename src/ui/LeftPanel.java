@@ -3,14 +3,15 @@ package ui;
 import javax.swing.*;
 import java.awt.*;
 
-public class BuildingPanel extends JPanel
+public class LeftPanel extends JPanel
 {
     JPanel elevatorView;
-    BuildingPanel(int nbEtage, LogPanel logPanel)
+    LeftPanel(int nbEtage, LogPanel logPanel)
     {
         super(new BorderLayout());
 
         JLabel north = new JLabel("HOTEL");
+        north.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(north, BorderLayout.NORTH);
 
         JPanel floors = new JPanel();
@@ -19,10 +20,8 @@ public class BuildingPanel extends JPanel
             floors.add(new FloorPanel(i,nbEtage,logPanel));
         this.add(floors, BorderLayout.CENTER);
 
-        elevatorView = new ElevatorViewPanel(nbEtage);
+        elevatorView = new ElevatorPanel(nbEtage);
         this.add(elevatorView, BorderLayout.WEST);
 
-
-        this.setBackground(new Color(221, 147, 218));
     }
 }

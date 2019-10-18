@@ -12,7 +12,7 @@ public class LogPanel extends JPanel
         JPanel outsidePanel = new JPanel();
         JPanel labelPanel = new JPanel();
         JPanel logAreaPanel = new JPanel();
-        JLabel title = new JLabel("AFFICHAGE DES LOGS");
+        JLabel title = new JLabel("LOGS DES APPELS");
         labelPanel.add(title);
         outsidePanel.add(labelPanel,BorderLayout.NORTH);
         outsidePanel.setPreferredSize(new Dimension(400,240));

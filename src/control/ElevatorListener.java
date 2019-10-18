@@ -1,16 +1,16 @@
 package control;
 
-import ui.ElevatorViewPanel;
+import ui.ElevatorPanel;
 
 public class ElevatorListener extends Thread {
     private ElevatorSimulator elevatorSimulator;
     private ControlCommand controlCommand;
-    private ElevatorViewPanel elevatorViewPanel;
+    private ElevatorPanel elevatorPanel;
 
-    ElevatorListener(ElevatorSimulator elevatorSimulator, ControlCommand controlCommand, ElevatorViewPanel elevatorViewPanel) {
+    ElevatorListener(ElevatorSimulator elevatorSimulator, ControlCommand controlCommand, ElevatorPanel elevatorPanel) {
         this.elevatorSimulator = elevatorSimulator;
         this.controlCommand = controlCommand;
-        this.elevatorViewPanel = elevatorViewPanel;
+        this.elevatorPanel = elevatorPanel;
     }
 
     @Override
@@ -21,7 +21,7 @@ public class ElevatorListener extends Thread {
                 if (y != elevatorSimulator.getY()){
                     y = elevatorSimulator.getY();
                     //System.out.println(y);
-                    elevatorViewPanel.ascenseur.setValue(y);
+                    elevatorPanel.ascenseur.setValue(y);
                     if ((y - 50) % 100 == 0) {
                         System.out.println("LIS étage n"+ (y-50)/100 + "| y=" + y); //todo: is working => on capte bien l'étage et ça renseigne bien controlCommand
                         controlCommand.setCurrentFloor((y-50)/100);

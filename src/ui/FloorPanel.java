@@ -10,7 +10,10 @@ public class FloorPanel extends JPanel
     public FloorPanel(int floorId, int nbEtage, LogPanel logPanel)
     {
         super();
-        this.add(new JLabel(String.valueOf(floorId)));
+        JLabel floorLabel = new JLabel(String.valueOf(floorId));
+        if( 255/nbEtage*floorId < 255/2)
+            floorLabel.setForeground(new Color(255,255,255));
+        this.add(floorLabel);
         if(!(floorId == nbEtage-1))
         {
             JButton upButton = new JButton("/\\");
@@ -23,6 +26,6 @@ public class FloorPanel extends JPanel
             downButton.addActionListener(new FloorCallListener(floorId,logPanel));
             this.add(downButton);
         }
-        this.setBackground(new Color(250/nbEtage*(nbEtage-floorId),250/nbEtage*floorId,255));
+        this.setBackground(new Color(255/nbEtage*floorId,255/nbEtage*floorId,255/nbEtage*floorId));
     }
 }

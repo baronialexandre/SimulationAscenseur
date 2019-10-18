@@ -1,17 +1,15 @@
 package control;
 
 import control.strategy.ControlStrategy;
-import ui.ElevatorViewPanel;
+import ui.ElevatorPanel;
 import utils.Direction;
 import utils.ControllerState;
-import utils.ElevatorState;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static java.lang.Thread.sleep;
-import static utils.ElevatorState.*;
 
 public class ControlCommand
 {
@@ -27,7 +25,7 @@ public class ControlCommand
     private int aimedFloor;
     private boolean emergency;
 
-    public ControlCommand(int floorNumber, ElevatorViewPanel elevatorViewPanel, ControlStrategy controlStrategy) {
+    public ControlCommand(int floorNumber, ElevatorPanel elevatorPanel, ControlStrategy controlStrategy) {
         this.callsUp = new ArrayList<>();
         this.callsDown = new ArrayList<>();
         this.state = ControllerState.WAIT;
@@ -39,7 +37,7 @@ public class ControlCommand
         this.elevatorSimulator = new ElevatorSimulator(floorNumber);
         elevatorSimulator.start();
 
-        ElevatorListener elevatorListener = new ElevatorListener(elevatorSimulator, this, elevatorViewPanel);
+        ElevatorListener elevatorListener = new ElevatorListener(elevatorSimulator, this, elevatorPanel);
         elevatorListener.start();
     }
 

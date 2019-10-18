@@ -27,11 +27,11 @@ public class MainWindow extends JFrame
 
         LogPanel logPanel = new LogPanel();
 
-        BuildingPanel leftPane = new BuildingPanel(nbFloors, logPanel);
-        mainPane.add(leftPane);
+        LeftPanel leftPanel = new LeftPanel(nbFloors, logPanel);
+        mainPane.add(leftPanel);
 
-        ElevatorPanel rightPane = new ElevatorPanel(nbFloors, logPanel);
-        mainPane.add(rightPane);
+        RightPanel rightPanel = new RightPanel(nbFloors, logPanel);
+        mainPane.add(rightPanel);
 
         this.setSize(1400,810);
         this.setContentPane(mainPane);
@@ -39,7 +39,7 @@ public class MainWindow extends JFrame
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
-        ControlCommand controlCommand = new ControlCommand(nbFloors, (ElevatorViewPanel) leftPane.elevatorView, controlStrategy);
+        ControlCommand controlCommand = new ControlCommand(nbFloors, (ElevatorPanel) leftPanel.elevatorView, controlStrategy);
 
         FloorCallListener.setControlCommand(controlCommand);
         EmergencyActionListener.setControlCommand(controlCommand);
