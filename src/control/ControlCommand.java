@@ -4,12 +4,11 @@ import control.strategy.ControlStrategy;
 import ui.ElevatorPanel;
 import utils.Direction;
 import utils.ControllerState;
+import utils.ElevatorState;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static java.lang.Thread.sleep;
 
 public class ControlCommand
 {
@@ -34,7 +33,7 @@ public class ControlCommand
         this.emergency = false;
         this.floorNumber = floorNumber;
         this.controlStrategy = controlStrategy;
-        this.elevatorSimulator = new ElevatorSimulator(floorNumber);
+        this.elevatorSimulator = new ElevatorSimulator();
         elevatorSimulator.start();
 
         ElevatorListener elevatorListener = new ElevatorListener(elevatorSimulator, this, elevatorPanel);
@@ -56,7 +55,6 @@ public class ControlCommand
             return;
         if(!callsDown.contains(floorNb)){
             callsDown.add(floorNb);
-            //Collections.sort(callsDown,Collections.reverseOrder());
             callsDown.sort(Collections.reverseOrder());
             controlStrategy.updateAimedFloor(this);
         }
@@ -87,12 +85,11 @@ public class ControlCommand
         emergency = true;
         callsUp.clear();
         callsDown.clear();
-        elevatorSimulator.stopUntilOrder();
+        elevatorSimulator.setState(ElevatorState.STOPPED);
     }
 
     public void restart(){
         emergency = false;
-        // gestion du aimed floor proche (plus realiste)
         if(state.equals(ControllerState.MOVEMENT)) {
             if (direction.equals(Direction.UP))
                 aimedFloor = currentFloor + 1;
@@ -110,17 +107,7 @@ public class ControlCommand
         return callsUp;
     }
 
-    public void setCallsUp(List<Integer> callsUp) {
-        this.callsUp = callsUp;
-    }
-
-    public List<Integer> getCallsDown() {
-        return callsDown;
-    }
-
-    public void setCallsDown(List<Integer> callsDown) {
-        this.callsDown = callsDown;
-    }
+    public List<Integer> getCallsDown() { return callsDown; }
 
     public ControllerState getState() {
         return state;
@@ -154,24 +141,14 @@ public class ControlCommand
         return emergency;
     }
 
-    public void setEmergency(boolean emergency) {
-        this.emergency = emergency;
-    }
-
     public ElevatorSimulator getElevatorSimulator() {
         return elevatorSimulator;
-    }
-
-    public void setElevatorSimulator(ElevatorSimulator elevatorSimulator) {
-        this.elevatorSimulator = elevatorSimulator;
     }
 
     public static long getSleepTime() {
         return sleepTime;
     }
 
-
-    @Override
     public String toString() {
         return "ControlCommand{" +
                 "floorNumber=" + floorNumber +

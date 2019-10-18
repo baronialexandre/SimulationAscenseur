@@ -3,6 +3,7 @@ package control.strategy;
 import control.ControlCommand;
 import utils.ControllerState;
 import utils.Direction;
+import utils.ElevatorState;
 
 import java.util.Collections;
 
@@ -10,14 +11,13 @@ import static java.lang.Thread.sleep;
 
 public class AdvancedControlStrategy implements ControlStrategy {
 
-    public void updateAimedFloor(ControlCommand controlCommand)
-    {
-        if (controlCommand.isEmergency() || controlCommand.getCallsUp().isEmpty() && controlCommand.getCallsDown().isEmpty()){
+    public void updateAimedFloor(ControlCommand controlCommand) {
+        if (controlCommand.isEmergency() || controlCommand.getCallsUp().isEmpty() && controlCommand.getCallsDown().isEmpty()) {
             return;
         }
 
-        if(controlCommand.getDirection().equals(Direction.UP)){
-            if(!controlCommand.getCallsUp().isEmpty()) {
+        if (controlCommand.getDirection().equals(Direction.UP)) {
+            if (!controlCommand.getCallsUp().isEmpty()) {
                 for (Integer i : controlCommand.getCallsUp()) {
                     if (controlCommand.getCurrentFloor() < i) {
                         controlCommand.setAimedFloor(i);
@@ -26,10 +26,10 @@ public class AdvancedControlStrategy implements ControlStrategy {
                     }
                 }
             }
-            if(!controlCommand.getCallsDown().isEmpty()){
+            if (!controlCommand.getCallsDown().isEmpty()) {
                 Collections.reverse(controlCommand.getCallsDown());
                 for (Integer i : controlCommand.getCallsDown()) {
-                    if (controlCommand.getCurrentFloor() < i){
+                    if (controlCommand.getCurrentFloor() < i) {
                         controlCommand.setAimedFloor(i);
                         updateElevatorState(controlCommand);
                         Collections.reverse(controlCommand.getCallsDown());
@@ -38,15 +38,15 @@ public class AdvancedControlStrategy implements ControlStrategy {
                 }
                 Collections.reverse(controlCommand.getCallsDown());
             }
-            if (controlCommand.getState() == ControllerState.WAIT){
+            if (controlCommand.getState() == ControllerState.WAIT) {
                 controlCommand.setDirection(Direction.DOWN);
                 updateAimedFloor(controlCommand);
             }
             return;
         }
 
-        if(controlCommand.getDirection().equals(Direction.DOWN)){
-            if(!controlCommand.getCallsDown().isEmpty()) {
+        if (controlCommand.getDirection().equals(Direction.DOWN)) {
+            if (!controlCommand.getCallsDown().isEmpty()) {
                 for (Integer i : controlCommand.getCallsDown()) {
                     if (controlCommand.getCurrentFloor() > i) {
                         controlCommand.setAimedFloor(i);
@@ -55,10 +55,10 @@ public class AdvancedControlStrategy implements ControlStrategy {
                     }
                 }
             }
-            if(!controlCommand.getCallsUp().isEmpty()){
+            if (!controlCommand.getCallsUp().isEmpty()) {
                 Collections.reverse(controlCommand.getCallsUp());
                 for (Integer i : controlCommand.getCallsUp()) {
-                    if (controlCommand.getCurrentFloor() > i){
+                    if (controlCommand.getCurrentFloor() > i) {
                         controlCommand.setAimedFloor(i);
                         updateElevatorState(controlCommand);
                         Collections.reverse(controlCommand.getCallsUp());
@@ -67,22 +67,20 @@ public class AdvancedControlStrategy implements ControlStrategy {
                 }
                 Collections.reverse(controlCommand.getCallsUp());
             }
-            if (controlCommand.getState() == ControllerState.WAIT){
+            if (controlCommand.getState() == ControllerState.WAIT) {
                 controlCommand.setDirection(Direction.UP);
                 updateAimedFloor(controlCommand);
             }
         }
     }
 
-    public void updateElevatorState(ControlCommand controlCommand){
+    public void updateElevatorState(ControlCommand controlCommand) {
 
         if (controlCommand.isEmergency())
             return;
 
-        if(controlCommand.getCurrentFloor() == controlCommand.getAimedFloor()) {
-            //controlCommand.getAimedFloor()Reached
-            System.out.println("CC on est arrivé etage"+ controlCommand.getCurrentFloor());
-            controlCommand.getElevatorSimulator().stopUntilOrder();
+        if (controlCommand.getCurrentFloor() == controlCommand.getAimedFloor()) {
+            controlCommand.getElevatorSimulator().setState(ElevatorState.STOPPED);
             controlCommand.setState(ControllerState.WAIT);
             try {
                 sleep(controlCommand.getSleepTime());
@@ -92,36 +90,28 @@ public class AdvancedControlStrategy implements ControlStrategy {
             controlCommand.getCallsUp().remove(Integer.valueOf(controlCommand.getCurrentFloor()));
             controlCommand.getCallsDown().remove(Integer.valueOf(controlCommand.getCurrentFloor()));
             System.out.println(this);
-            if(controlCommand.getCurrentFloor() == controlCommand.getFloorNumber()-1)
+            if (controlCommand.getCurrentFloor() == controlCommand.getFloorNumber() - 1)
                 controlCommand.setDirection(Direction.DOWN);
-            else if(controlCommand.getCurrentFloor() == 0)
+            else if (controlCommand.getCurrentFloor() == 0)
                 controlCommand.setDirection(Direction.UP);
             updateAimedFloor(controlCommand);
         }
-        if(controlCommand.getCurrentFloor() - controlCommand.getAimedFloor() == 1) {
-            controlCommand.getElevatorSimulator().setGoingNextDown();
+        if (controlCommand.getCurrentFloor() - controlCommand.getAimedFloor() == 1) {
+            controlCommand.getElevatorSimulator().setState(ElevatorState.GOINGNEXTDOWN);
             controlCommand.setDirection(Direction.DOWN);
             controlCommand.setState(ControllerState.MOVEMENT);
-            //System.out.println("CC direction DOWN next DOWN");
-        }
-        else if(controlCommand.getCurrentFloor() - controlCommand.getAimedFloor() == -1) {
-            controlCommand.getElevatorSimulator().setGoingNextUp();
+        } else if (controlCommand.getCurrentFloor() - controlCommand.getAimedFloor() == -1) {
+            controlCommand.getElevatorSimulator().setState(ElevatorState.GOINGNEXTUP);
             controlCommand.setDirection(Direction.UP);
             controlCommand.setState(ControllerState.MOVEMENT);
-            //System.out.println("CC direction UP next UP");
-        }
-        else if(controlCommand.getCurrentFloor() - controlCommand.getAimedFloor() > 1) {
-            controlCommand.getElevatorSimulator().setGoingDown();
+        } else if (controlCommand.getCurrentFloor() - controlCommand.getAimedFloor() > 1) {
+            controlCommand.getElevatorSimulator().setState(ElevatorState.GOINGDOWN);
             controlCommand.setDirection(Direction.DOWN);
             controlCommand.setState(ControllerState.MOVEMENT);
-            //System.out.println("CC direction DOWN");
-        }
-        else if(controlCommand.getCurrentFloor() - controlCommand.getAimedFloor() < -1) {
-            controlCommand.getElevatorSimulator().setGoingUp();
+        } else if (controlCommand.getCurrentFloor() - controlCommand.getAimedFloor() < -1) {
+            controlCommand.getElevatorSimulator().setState(ElevatorState.GOINGUP);
             controlCommand.setDirection(Direction.UP);
             controlCommand.setState(ControllerState.MOVEMENT);
-            //System.out.println("CC direction UP");
         }
     }
-
 }

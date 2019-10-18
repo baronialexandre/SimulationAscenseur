@@ -12,12 +12,6 @@ public class ElevatorSimulator extends Thread {
 
     private int y = 50;
 
-    private int floorNumber;
-
-    ElevatorSimulator(int floorNumber) {
-        this.floorNumber = floorNumber;
-    }
-
     int getY() {
         return y;
     }
@@ -32,7 +26,6 @@ public class ElevatorSimulator extends Thread {
 
 
     public void run() {
-        // doit tourner à l'infini
         for(;;) {
             try {
                 nextStep();
@@ -45,21 +38,7 @@ public class ElevatorSimulator extends Thread {
         }
     }
 
-
-    public void stopUntilOrder() {state = STOPPED; }
-
-    public void setGoingNextDown() {
-        state = GOINGNEXTDOWN;
-    }
-    public void setGoingNextUp() {
-        state = GOINGNEXTUP;
-    }
-    public void setGoingDown() {
-        state = GOINGDOWN;
-    }
-    public void setGoingUp() {
-        state = GOINGUP;
-    }
+    public void setState(ElevatorState elevatorState){this.state = elevatorState;}
 
     private void reachNextFloor() throws InterruptedException {
         if (state == GOINGNEXTDOWN) {
@@ -90,10 +69,7 @@ public class ElevatorSimulator extends Thread {
             sleep(sleepTime);
         }
         if(state == GOINGNEXTDOWN || state == GOINGNEXTUP) {
-            System.out.println("SIM: on va aller chercher un étage");
             reachNextFloor();
-            //System.out.println("SIM: Etage atteint, on s'arrete");
-            //stopUntilOrder();
         }
     }
 }

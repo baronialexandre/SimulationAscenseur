@@ -3,6 +3,7 @@ package control.strategy;
 import control.ControlCommand;
 import utils.ControllerState;
 import utils.Direction;
+import utils.ElevatorState;
 
 
 import static java.lang.Thread.sleep;
@@ -36,7 +37,6 @@ public class BasicControlStrategy implements ControlStrategy{
             if(!controlCommand.getCallsUp().isEmpty()) {
                 controlCommand.setAimedFloor(controlCommand.getCallsUp().get(0));
                 updateElevatorState(controlCommand);
-                return;
             }
         }
     }
@@ -46,7 +46,7 @@ public class BasicControlStrategy implements ControlStrategy{
             return;
 
         if(controlCommand.getCurrentFloor() == controlCommand.getAimedFloor()) {
-            controlCommand.getElevatorSimulator().stopUntilOrder();
+            controlCommand.getElevatorSimulator().setState(ElevatorState.STOPPED);
             controlCommand.setState(ControllerState.WAIT);
             try {
                 sleep(controlCommand.getSleepTime());
@@ -61,23 +61,20 @@ public class BasicControlStrategy implements ControlStrategy{
                 controlCommand.setDirection(Direction.UP);
             updateAimedFloor(controlCommand);
         }
-        if(controlCommand.getCurrentFloor() - controlCommand.getAimedFloor() == 1) {
-            controlCommand.getElevatorSimulator().setGoingNextDown();
+        if (controlCommand.getCurrentFloor() - controlCommand.getAimedFloor() == 1) {
+            controlCommand.getElevatorSimulator().setState(ElevatorState.GOINGNEXTDOWN);
             controlCommand.setDirection(Direction.DOWN);
             controlCommand.setState(ControllerState.MOVEMENT);
-        }
-        else if(controlCommand.getCurrentFloor() - controlCommand.getAimedFloor() == -1) {
-            controlCommand.getElevatorSimulator().setGoingNextUp();
+        } else if (controlCommand.getCurrentFloor() - controlCommand.getAimedFloor() == -1) {
+            controlCommand.getElevatorSimulator().setState(ElevatorState.GOINGNEXTUP);
             controlCommand.setDirection(Direction.UP);
             controlCommand.setState(ControllerState.MOVEMENT);
-        }
-        else if(controlCommand.getCurrentFloor() - controlCommand.getAimedFloor() > 1) {
-            controlCommand.getElevatorSimulator().setGoingDown();
+        } else if (controlCommand.getCurrentFloor() - controlCommand.getAimedFloor() > 1) {
+            controlCommand.getElevatorSimulator().setState(ElevatorState.GOINGDOWN);
             controlCommand.setDirection(Direction.DOWN);
             controlCommand.setState(ControllerState.MOVEMENT);
-        }
-        else if(controlCommand.getCurrentFloor() - controlCommand.getAimedFloor() < -1) {
-            controlCommand.getElevatorSimulator().setGoingUp();
+        } else if (controlCommand.getCurrentFloor() - controlCommand.getAimedFloor() < -1) {
+            controlCommand.getElevatorSimulator().setState(ElevatorState.GOINGUP);
             controlCommand.setDirection(Direction.UP);
             controlCommand.setState(ControllerState.MOVEMENT);
         }

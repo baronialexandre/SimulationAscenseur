@@ -20,10 +20,8 @@ public class ElevatorListener extends Thread {
             synchronized (elevatorSimulator) {
                 if (y != elevatorSimulator.getY()){
                     y = elevatorSimulator.getY();
-                    //System.out.println(y);
                     elevatorPanel.ascenseur.setValue(y);
                     if ((y - 50) % 100 == 0) {
-                        System.out.println("LIS étage n"+ (y-50)/100 + "| y=" + y); //todo: is working => on capte bien l'étage et ça renseigne bien controlCommand
                         controlCommand.setCurrentFloor((y-50)/100);
                     }
                 }

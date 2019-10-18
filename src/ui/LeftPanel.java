@@ -22,6 +22,5 @@ public class LeftPanel extends JPanel
 
         elevatorView = new ElevatorPanel(nbEtage);
         this.add(elevatorView, BorderLayout.WEST);
-
     }
 }
