@@ -13,7 +13,7 @@ import java.util.List;
 public class ControlCommand
 {
 
-    private static final long sleepTime = 1000;
+    private static final long SLEEP_TIME = 1000;
     private final int floorNumber;
     private ElevatorSimulator elevatorSimulator;
     private ControlStrategy controlStrategy;
@@ -146,7 +146,7 @@ public class ControlCommand
     }
 
     public static long getSleepTime() {
-        return sleepTime;
+        return SLEEP_TIME;
     }
 
     public String toString() {

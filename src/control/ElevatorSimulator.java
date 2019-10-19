@@ -6,7 +6,7 @@ import static utils.ElevatorState.*;
 
 public class ElevatorSimulator extends Thread {
 
-    private static final long sleepTime = 10;
+    private static final long SLEEP_TIME = 10;
 
     private ElevatorState state=STOPPED;
 
@@ -43,30 +43,30 @@ public class ElevatorSimulator extends Thread {
     private void reachNextFloor() throws InterruptedException {
         if (state == GOINGNEXTDOWN) {
             goDown();
-            sleep(sleepTime);
+            sleep(SLEEP_TIME);
         }
         if (state == GOINGNEXTUP) {
             goUp();
-            sleep(sleepTime);
+            sleep(SLEEP_TIME);
         }
         while (state == GOINGNEXTDOWN && y - 50 % 100 != 0) {
             goDown();
-            sleep(sleepTime);
+            sleep(SLEEP_TIME);
         }
         while (state == GOINGNEXTUP && y - 50 %100 != 0) {
             goUp();
-            sleep(sleepTime);
+            sleep(SLEEP_TIME);
         }
     }
 
     private void nextStep() throws InterruptedException {
         while (state == GOINGDOWN) {
             goDown();
-            sleep(sleepTime);
+            sleep(SLEEP_TIME);
         }
         while (state == GOINGUP) {
             goUp();
-            sleep(sleepTime);
+            sleep(SLEEP_TIME);
         }
         if(state == GOINGNEXTDOWN || state == GOINGNEXTUP) {
             reachNextFloor();
